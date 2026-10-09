@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "prytan": {
+      "type": "http",
+      "url": "https://staging.prytan.ai/mcp"
+    }
+  }
+}

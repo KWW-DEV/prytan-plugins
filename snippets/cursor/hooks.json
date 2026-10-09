@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "python3 \"$HOME/.cursor/hooks/prytan_hook.py\" start --host cursor --app \"Cursor\""
+      }
+    ],
+    "stop": [
+      {
+        "command": "python3 \"$HOME/.cursor/hooks/prytan_hook.py\" stop --host cursor --app \"Cursor\""
+      }
+    ]
+  }
+}

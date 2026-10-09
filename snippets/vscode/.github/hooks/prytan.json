@@ -1,0 +1,37 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${workspaceFolder}/.github/hooks/prytan_hook.py\" start --host vscode --app \"VS Code\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${workspaceFolder}/.github/hooks/prytan_hook.py\" prompt --host vscode --app \"VS Code\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${workspaceFolder}/.github/hooks/prytan_hook.py\" stop --host vscode --app \"VS Code\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

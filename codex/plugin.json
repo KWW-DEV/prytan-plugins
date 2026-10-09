@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "prytan",
+  "version": "0.1.0",
+  "description": "Your own memory of what you like and how you like things done, shared by every AI you use.",
+  "author": {
+    "name": "Prytan",
+    "url": "https://prytan.ai"
+  },
+  "homepage": "https://prytan.ai",
+  "repository": "https://github.com/KWW-DEV/prytan-plugins",
+  "license": "MIT",
+  "keywords": [
+    "memory",
+    "preferences",
+    "personal"
+  ],
+  "extensions": {
+    "com.openai": {
+      "apps": [
+        {
+          "name": "prytan",
+          "mcp": "./mcp.json"
+        }
+      ],
+      "hooks": "./hooks/hooks.json",
+      "onboardingSkill": "prytan-setup",
+      "interface": {
+        "displayName": "Prytan",
+        "shortDescription": "Your preferences, remembered",
+        "longDescription": "Prytan is your own memory of what you like and how you like things done, shared by every AI you use. Before each message it recalls what fits; as you talk it saves what you tell it about yourself: preferences, decisions, plans, interests and changes. You see, correct and delete all of it on your Prytan page. Nothing is saved unless you switched it on there.",
+        "developerName": "Prytan",
+        "category": "Productivity",
+        "capabilities": [
+          "Recalls what you saved that fits the task",
+          "Saves preferences, decisions and plans as you talk",
+          "Everything is yours to see, correct and delete"
+        ],
+        "websiteURL": "https://prytan.ai",
+        "privacyPolicyURL": "https://prytan.ai/legal/personal-privacy",
+        "termsOfServiceURL": "https://prytan.ai/legal/personal-terms",
+        "supportURL": "https://prytan.ai/support",
+        "brandColor": "#1F6F8B",
+        "defaultPrompt": "What do you remember about me?"
+      }
+    }
+  }
+}

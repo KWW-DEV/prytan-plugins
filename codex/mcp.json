@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "prytan": {
+      "type": "streamable-http",
+      "url": "https://staging.prytan.ai/mcp"
+    }
+  }
+}

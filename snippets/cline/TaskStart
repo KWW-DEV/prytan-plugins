@@ -1,0 +1,3 @@
+#!/bin/sh
+# Cline hook: a recall when a task starts.
+exec python3 "$(dirname "$0")/prytan_hook.py" start --host cline --app "Cline"
