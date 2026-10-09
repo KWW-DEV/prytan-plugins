@@ -39,8 +39,8 @@
         "websiteURL": "https://prytan.ai",
         "privacyPolicyURL": "https://prytan.ai/legal/personal-privacy",
         "termsOfServiceURL": "https://prytan.ai/legal/personal-terms",
-        "supportURL": "https://prytan.ai/support",
-        "brandColor": "#1F6F8B",
+        "supportURL": "https://prytan.ai/for-agents#support",
+        "brandColor": "#17181a",
         "defaultPrompt": "What do you remember about me?"
       }
     }

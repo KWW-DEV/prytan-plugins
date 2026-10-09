@@ -123,14 +123,26 @@ def prompt_from(data: dict) -> str:
     return ""
 
 
-def checkpoint_in_last_turn(transcript_path: str) -> bool:
-    """Read the host's transcript on this computer (Claude Code's JSON lines): did the assistant's last turn, after
-    the person's last message, call a checkpoint tool? Nothing of the transcript leaves the computer."""
+# Words that make a message likely to carry something about the person: a liking, a choice, a plan, a change. The
+# reminder after an answer comes only for such a message, so the chat is not followed by "nothing new to save" after
+# every answer (seen in Claude Code, 9 Oct 2026). Read on this computer; nothing of the message leaves it for this.
+_ABOUT_ME = re.compile(r"\b(i|i'd|i'm|i've|i'll|we|we'd|we're|we've|let's|my|our|me)\b", re.I)
+_TELLS = re.compile(r"\b(prefer|like|love|hate|dislike|rather|think|decid|choos|chose|pick|plan|going to|want|need|usually|"
+                    r"always|never|changed|instead|no longer|from now|switch|moved|rule out|go with|let's|agree|settle|favourite|favorite)\w*", re.I)
+
+
+def says_something_about_the_person(text: str) -> bool:
+    return bool(text) and bool(_ABOUT_ME.search(text)) and bool(_TELLS.search(text))
+
+
+def last_turn(transcript_path: str) -> tuple:
+    """Read the host's transcript on this computer (Claude Code's JSON lines): (the person's last message, whether the
+    assistant's turn after it called a checkpoint tool). Nothing of the transcript leaves the computer."""
     try:
         lines = Path(transcript_path).read_text(encoding="utf-8").splitlines()
     except (OSError, TypeError):
-        return False
-    found = False
+        return "", False
+    said, found = "", False
     for raw in lines[-400:]:
         try:
             row = json.loads(raw)
@@ -139,12 +151,14 @@ def checkpoint_in_last_turn(transcript_path: str) -> bool:
         msg = row.get("message") if isinstance(row.get("message"), dict) else row
         role, content = msg.get("role") or row.get("type"), msg.get("content")
         if role == "user" and isinstance(content, str):               # the person's message, not a tool result
-            found = False
+            said, found = content, False
+        elif role == "user" and isinstance(content, list) and content and isinstance(content[0], dict) and content[0].get("type") == "text":
+            said, found = str(content[0].get("text") or ""), False
         elif role == "assistant" and isinstance(content, list):
             for part in content:
                 if isinstance(part, dict) and part.get("type") == "tool_use" and "checkpoint" in str(part.get("name", "")).lower():
                     found = True
-    return found
+    return said, found
 
 
 def reminded_recently(session_id: str, within: int = 90) -> bool:
@@ -170,7 +184,10 @@ def run(event: str, host: str, app: str, data: dict, test: bool = False) -> dict
         if event == "stop":
             if host == "gemini":                                        # AfterAgent takes no context: the skill asks instead
                 return {}
-            if data.get("stop_hook_active") or checkpoint_in_last_turn(data.get("transcript_path", "")):
+            if data.get("stop_hook_active"):
+                return {}
+            said, sent = last_turn(data.get("transcript_path", ""))
+            if sent or not says_something_about_the_person(said):
                 return {}
             if reminded_recently(str(data.get("session_id") or data.get("conversation_id") or "")):
                 return {}
