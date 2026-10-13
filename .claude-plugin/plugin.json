@@ -1,7 +1,7 @@
 {
   "name": "prytan",
   "displayName": "Prytan",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Your own memory of what you like and how you like things done, shared by every AI you use. Prytan recalls what fits before each message and saves what you tell it, on your say-so.",
   "author": {
     "name": "Prytan",
@@ -16,6 +16,11 @@
     "personal",
     "assistant"
   ],
+  "icon": "./logo.png",
+  "documentationUrl": "https://staging.prytan.ai/add",
+  "supportUrl": "https://staging.prytan.ai/for-agents#support",
+  "privacyPolicyUrl": "https://staging.prytan.ai/legal/personal-privacy",
+  "termsOfServiceUrl": "https://staging.prytan.ai/legal/personal-terms",
   "userConfig": {
     "prytan_key": {
       "type": "string",

@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "prytan",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Your own memory of what you like and how you like things done, shared by every AI you use.",
   "author": {
     "name": "Prytan",
